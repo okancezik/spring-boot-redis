@@ -5,9 +5,11 @@ import com.okancezik.spring_boot.redis.repositories.BillRunRepository;
 import com.okancezik.spring_boot.redis.services.abstracts.BillRunService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -40,6 +42,7 @@ public class BillRunServiceImpl implements BillRunService {
 
 	private final BillRunRepository billRunRepository;
 
+	@CacheEvict(value = "billRuns", key = "'allBillRuns'")
 	@Override
 	public void save(BillRun billRun) {
 		billRunRepository.save(billRun);
@@ -48,14 +51,22 @@ public class BillRunServiceImpl implements BillRunService {
 	@Cacheable(value = "billRuns", key = "#id")
 	@Override
 	public BillRun getById(long id) {
-		log.info("Database called for id: "+id);
+		log.info("GetById method has been called. Database has been called for id: "+id);
 		Optional<BillRun> billRun = billRunRepository.findById(id);
 		return billRun.orElse(null);
 	}
 
+	@CacheEvict(value = "billRuns",key = "#id")
 	@Override
 	public boolean deleteById(long id) {
 		billRunRepository.deleteById(id);
 		return true;
+	}
+
+	@Cacheable(value = "billRuns", key = "'allBillRuns'")
+	@Override
+	public List<BillRun> getAll() {
+		log.info("GetAll method has been called.");
+		return billRunRepository.findAll();
 	}
 }
