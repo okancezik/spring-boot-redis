@@ -1,14 +1,16 @@
 package com.okancezik.spring_boot.redis.services.concretes;
 
-import com.okancezik.spring_boot.redis.core.RedisService;
 import com.okancezik.spring_boot.redis.entites.BillRun;
 import com.okancezik.spring_boot.redis.repositories.BillRunRepository;
 import com.okancezik.spring_boot.redis.services.abstracts.BillRunService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BillRunServiceImpl implements BillRunService {
@@ -34,6 +36,8 @@ public class BillRunServiceImpl implements BillRunService {
 //		return redisService.deleteCacheValue(id);
 //	}
 
+	//private final BillRunRepository billRunRepository;
+
 	private final BillRunRepository billRunRepository;
 
 	@Override
@@ -41,8 +45,10 @@ public class BillRunServiceImpl implements BillRunService {
 		billRunRepository.save(billRun);
 	}
 
+	@Cacheable(value = "billRuns", key = "#id")
 	@Override
 	public BillRun getById(long id) {
+		log.info("Database called for id: "+id);
 		Optional<BillRun> billRun = billRunRepository.findById(id);
 		return billRun.orElse(null);
 	}
