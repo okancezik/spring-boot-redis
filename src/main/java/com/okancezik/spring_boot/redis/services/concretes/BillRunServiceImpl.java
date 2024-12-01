@@ -48,8 +48,7 @@ public class BillRunServiceImpl implements BillRunService {
 	}
 
 	@Override
-	public boolean deleteById(long id) {
+	public void deleteById(long id) {
 		billRunRepository.deleteById(id);
-		return true;
 	}
 }

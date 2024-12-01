@@ -5,5 +5,5 @@ import com.okancezik.spring_boot.redis.entites.BillRun;
 public interface BillRunService {
 	void save(BillRun billRun);
 	BillRun getById(long id);
-	boolean deleteById(long id);
+	void deleteById(long id);
 }

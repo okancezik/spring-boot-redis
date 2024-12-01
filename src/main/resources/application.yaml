@@ -1,14 +1,25 @@
 spring:
   application:
     name: spring-boot&redis
+  datasource:
+    url: jdbc:postgresql://localhost:5432/billing-redis-app
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
 
 server:
   port: 8090
-
-
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-
-  redis:
-    host: localhost
-    port: 6379

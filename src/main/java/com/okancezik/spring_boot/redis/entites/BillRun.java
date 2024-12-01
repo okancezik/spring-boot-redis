@@ -1,21 +1,23 @@
 package com.okancezik.spring_boot.redis.entites;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash
-//@RedisHash(value = "User", timeToLive = 3600) // 1 saat sonra silinecek
+@Entity
 public class BillRun implements Serializable {
-	private static final long          serialVersionUID = 1L; // Versiyon kontrolü için gerekli
+	@Serial
+	private static final long          serialVersionUID = 1L;
+	@Id
 	private              long          id;
 	private              String        name;
 	private              LocalDateTime billDate;
