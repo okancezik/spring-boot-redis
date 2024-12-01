@@ -45,13 +45,14 @@ public class BillRunServiceImpl implements BillRunService {
 	@CacheEvict(value = "billRuns", key = "'allBillRuns'")
 	@Override
 	public void save(BillRun billRun) {
+		log.info("Save method has been called, BillRun data: {}", billRun.toString());
 		billRunRepository.save(billRun);
 	}
 
 	@Cacheable(value = "billRuns", key = "#id")
 	@Override
 	public BillRun getById(long id) {
-		log.info("GetById method has been called. Database has been called for id: "+id);
+		log.info("GetById method has been called. Database has been called for id: {}", id);
 		Optional<BillRun> billRun = billRunRepository.findById(id);
 		return billRun.orElse(null);
 	}
@@ -59,6 +60,7 @@ public class BillRunServiceImpl implements BillRunService {
 	@CacheEvict(value = "billRuns",key = "#id")
 	@Override
 	public boolean deleteById(long id) {
+		log.info("Delete method has been called, id: {}", id);
 		billRunRepository.deleteById(id);
 		return true;
 	}
