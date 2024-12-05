@@ -1,6 +1,6 @@
-package com.okancezik.spring_boot.redis.repositories;
+package com.okancezik.spring_boot.redis.repository;
 
-import com.okancezik.spring_boot.redis.entites.BillRun;
+import com.okancezik.spring_boot.redis.entity.BillRun;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BillRunRepository extends JpaRepository<BillRun,Long> {
