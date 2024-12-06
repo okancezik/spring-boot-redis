@@ -22,7 +22,7 @@ public class RedisService {
 
 	public Optional<BillRun> getCacheValue(Long key) {
 		BillRun billRun = redisTemplate.opsForValue().get(Constants.HASH_KEY + key.toString());
-		return billRun != null ? Optional.of(billRun) : Optional.empty();
+		return Optional.ofNullable(billRun);
 	}
 
 	public void deleteCacheValue(Long key) {
