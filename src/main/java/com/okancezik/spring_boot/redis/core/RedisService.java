@@ -2,7 +2,6 @@ package com.okancezik.spring_boot.redis.core;
 
 import com.okancezik.spring_boot.redis.entity.BillRun;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,6 @@ import java.util.Optional;
 import static com.okancezik.spring_boot.redis.enums.Keys.HASH_KEY;
 import static com.okancezik.spring_boot.redis.enums.Keys.HASH_KEY_ALL;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RedisService {
@@ -38,7 +36,6 @@ public class RedisService {
 
 	public Optional<List<BillRun>> getCacheList() {
 		List<BillRun> billRuns = redisListTemplate.opsForValue().get(HASH_KEY_ALL.getKey());
-		log.info("billRuns : {}", billRuns);
 		return billRuns != null ? Optional.of(billRuns) : Optional.empty();
 	}
 }

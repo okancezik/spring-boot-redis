@@ -20,14 +20,12 @@ public class BillRunServiceImplRTDB implements BillRunService {
 
 	@Override
 	public void save(BillRun billRun) {
-		log.info("Save method has been called");
 		billRunRepository.save(billRun);
 		redisService.setCacheValue(billRun.getId(), billRun);
 	}
 
 	@Override
 	public Optional<BillRun> getById(long id) {
-		log.info("GetById method has been called, id: {}", id);
 		Optional<BillRun> optionalCachedBillRun = redisService.getCacheValue(id);
 		if (optionalCachedBillRun.isPresent()) {
 			log.info("Data found in cache, id: {}", id);
@@ -46,7 +44,6 @@ public class BillRunServiceImplRTDB implements BillRunService {
 
 	@Override
 	public void delete(long id) {
-		log.info("DeleteById method has been called");
 		redisService.deleteCacheValue(id);
 		billRunRepository.deleteById(id);
 	}
