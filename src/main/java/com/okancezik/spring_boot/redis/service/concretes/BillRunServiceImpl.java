@@ -1,12 +1,12 @@
-package com.okancezik.spring_boot.redis.services.concretes;
+package com.okancezik.spring_boot.redis.service.concretes;
 
-import com.okancezik.spring_boot.redis.core.RedisService;
-import com.okancezik.spring_boot.redis.entites.BillRun;
-import com.okancezik.spring_boot.redis.repositories.BillRunRepository;
-import com.okancezik.spring_boot.redis.services.abstracts.BillRunService;
+import com.okancezik.spring_boot.redis.entity.BillRun;
+import com.okancezik.spring_boot.redis.repository.BillRunRepository;
+import com.okancezik.spring_boot.redis.service.abstracts.BillRunService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,14 +42,23 @@ public class BillRunServiceImpl implements BillRunService {
 	}
 
 	@Override
-	public BillRun getById(long id) {
-		Optional<BillRun> billRun = billRunRepository.findById(id);
-		return billRun.orElse(null);
+	public Optional<BillRun> getById(long id) {
+		Optional<BillRun> optionalBillRun = billRunRepository.findById(id);
+		if (optionalBillRun.isPresent()){
+			BillRun billRun = optionalBillRun.get();
+			return Optional.of(billRun);
+		}
+
+		return Optional.empty();
 	}
 
 	@Override
-	public boolean deleteById(long id) {
+	public void delete(long id) {
 		billRunRepository.deleteById(id);
-		return true;
+	}
+
+	@Override
+	public List<BillRun> getAll() {
+		return List.of();
 	}
 }

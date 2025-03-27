@@ -1,12 +1,15 @@
 package com.okancezik.spring_boot.redis.configs;
 
+import com.okancezik.spring_boot.redis.core.RedisBaseConfig;
+import com.okancezik.spring_boot.redis.entity.BillRun;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+
+import java.util.List;
 
 @Configuration
 public class RedisConfig {
@@ -16,10 +19,14 @@ public class RedisConfig {
 	}
 
 	@Bean
-	public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-		RedisTemplate<Object, Object> template = new RedisTemplate<>();
-		template.setConnectionFactory(connectionFactory);
-		template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-		return template;
+	public RedisTemplate<String, BillRun> redisTemplate(RedisConnectionFactory connectionFactory) {
+		RedisBaseConfig<String, BillRun> baseConfig = new RedisBaseConfig<>();
+		return baseConfig.getRedisTemplate(connectionFactory, BillRun.class);
+	}
+
+	@Bean
+	public RedisTemplate<String, List<BillRun>> redisListTemplate(RedisConnectionFactory connectionFactory) {
+		RedisBaseConfig<String, List<BillRun>> baseConfig = new RedisBaseConfig<>();
+		return baseConfig.getRedisListTemplate(connectionFactory);
 	}
 }
