@@ -36,7 +36,7 @@ public class RedisService {
 
 	public Optional<List<BillRun>> getCacheList() {
 		List<BillRun> billRuns = redisListTemplate.opsForValue().get(HASH_KEY_ALL.getKey());
-		return billRuns != null ? Optional.of(billRuns) : Optional.empty();
+		return Optional.ofNullable(billRuns);
 	}
 }
 

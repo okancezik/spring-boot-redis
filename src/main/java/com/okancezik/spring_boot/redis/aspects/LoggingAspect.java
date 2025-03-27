@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LoggingAspect {
-	@Pointcut("execution(* com.okancezik.spring_boot.redis.service.concretes.*.*(..))")
+	@Pointcut("execution(* com.okancezik.spring_boot.redis.service.*.*.*(..))")
 	public void serviceLayer() {
 	}
 
